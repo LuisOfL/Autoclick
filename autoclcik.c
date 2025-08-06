@@ -10,12 +10,12 @@
 
 #define HOLD_THRESHOLD_MS 300
 
-// Variables globales
+
 HWND hEditKey, hEditCPS, hStatus;
 bool autoclick_activado = false;
 bool hold_mode = false;
 UINT cps = 10;
-UINT tecla_objetivo = 0;  // VK code o XBUTTON1/XBUTTON2
+UINT tecla_objetivo = 0;  
 HHOOK hKeyboardHook = NULL;
 HHOOK hMouseHook = NULL;
 HANDLE hThread = NULL;
@@ -23,7 +23,7 @@ CRITICAL_SECTION cs;
 
 DWORD tecla_down_time = 0;
 
-// Prototipos
+
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 DWORD WINAPI AutoClickThread(LPVOID);
 LRESULT CALLBACK LowLevelKeyboardProc(int, WPARAM, LPARAM);
@@ -79,7 +79,7 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
                 {
                     tecla_down_time = GetTickCount();
                     hold_mode = true;
-                    ActivarAutoclick(); // Modo hold: activa inmediatamente
+                    ActivarAutoclick(); 
                 }
             }
             else if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP)
@@ -90,11 +90,11 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
                 if (hold_mode)
                 {
                     hold_mode = false;
-                    DesactivarAutoclick();  // Desactiva modo hold al soltar
+                    DesactivarAutoclick();  
                 }
                 else if (tiempo_presionado < HOLD_THRESHOLD_MS)
                 {
-                    // Pulsación rápida: toggle
+                   
                     ToggleAutoclick();
                 }
             }
@@ -114,7 +114,7 @@ LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
             if ((button == XBUTTON1 && tecla_objetivo == VK_XBUTTON1) ||
                 (button == XBUTTON2 && tecla_objetivo == VK_XBUTTON2))
             {
-                // Para mouse: solo toggle con click rápido (sin hold)
+             
                 ToggleAutoclick();
             }
         }
